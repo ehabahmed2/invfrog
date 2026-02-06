@@ -30,7 +30,7 @@ jobs:
         pyinstaller --noconfirm --onefile --windowed --add-data "assets:assets" --name "InvFrog" app.py
 
     - name: Upload Artifact
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: InvFrog-Mac
         path: dist/InvFrog.app
