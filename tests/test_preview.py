@@ -1,9 +1,12 @@
 """
 Simple test script to verify parser logic without GUI.
 """
-import os
+import os, sys
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
 import parser
 from parser import NamingScheme
+
 
 def test_filename_generation():
     # Mock Data
