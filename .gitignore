@@ -1,2 +1,5 @@
 _pycache_
 video_shot_plan_txt
+build
+dist
+*.egg-info
