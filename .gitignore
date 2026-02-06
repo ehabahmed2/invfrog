@@ -3,3 +3,11 @@ video_shot_plan_txt
 build
 dist
 *.egg-info
+__pycache__/
+dist/
+build/
+*.spec
+*.exe
+errors.log
+*.xlsx
+*.csv

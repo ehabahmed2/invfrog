@@ -2,7 +2,8 @@
 PDF Invoice Extractor & Organizer
 Main Application Entry Point
 """
-
+import subprocess
+import platform
 import os
 import sys
 import threading
@@ -19,6 +20,18 @@ from typing import List
 import parser
 from parser import ParseResult, Status, NamingScheme
 
+
+
+def open_file_or_folder(path):
+    """Cross-platform way to open files/folders."""
+    if platform.system() == 'Windows':
+        os.startfile(path)
+    elif platform.system() == 'Darwin':  # macOS
+        subprocess.call(('open', path))
+    else:  # Linux
+        subprocess.call(('xdg-open', path))
+        
+        
 # --- Helpers ---
 def resource_path(relative_path):
     """ Get absolute path to resource, works for dev and for PyInstaller """
@@ -212,7 +225,7 @@ class InvoiceApp:
     def open_output(self):
         d = self.output_folder.get()
         if os.path.exists(d):
-            os.startfile(d)
+            open_file_or_folder(d)
 
     def start_processing(self):
         inp = self.input_folder.get()
