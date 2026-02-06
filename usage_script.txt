@@ -1,0 +1,34 @@
+================================================================================
+                    30-SECOND USAGE EXPLANATION SCRIPT
+================================================================================
+
+FOR: Product listing, quick tutorial, customer support
+
+---
+
+"PDF Invoice Extractor pulls invoice data from your PDFs into Excel 
+automatically.
+
+Here's how it works:
+
+Step 1: Open the app and click Browse to select your folder of PDF invoices.
+
+Step 2: Click Start Extraction.
+
+Step 3: Wait a few seconds while it processes each file.
+
+Step 4: Done! Open your folder to find the Excel file with all your invoice 
+data - invoice numbers, dates, amounts, and vendors - neatly organized in 
+one spreadsheet.
+
+Green means success. Yellow means some data was missing. Red means the file 
+couldn't be processed - usually because it's a scanned image, not a digital PDF.
+
+That's it. No setup. No technical skills needed. Just drag, click, and export."
+
+---
+
+Word count: ~120 words
+Reading time: ~30 seconds
+
+================================================================================

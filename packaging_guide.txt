@@ -1,0 +1,154 @@
+================================================================================
+                    PACKAGING GUIDE: Creating the .EXE
+================================================================================
+
+This guide explains how to convert the Python application into a standalone
+Windows executable (.exe) that runs without Python installed.
+
+PREREQUISITES
+-------------
+1. Python 3.10 or newer installed
+2. All dependencies installed: pip install -r requirements.txt
+3. PyInstaller installed: pip install pyinstaller
+
+METHOD 1: Command Line (Recommended)
+------------------------------------
+
+1. Open Command Prompt or PowerShell
+2. Navigate to the project folder:
+   cd "C:\path\to\pdf_invoice_extractor"
+
+3. Run PyInstaller with these flags:
+
+   pyinstaller --onefile --windowed --name "PDF_Invoice_Extractor" --add-data "parser.py;." app.py
+
+   Explanation of flags:
+   --onefile     : Creates a single .exe file (easier to distribute)
+   --windowed    : No console window (GUI app)
+   --name        : Sets the output filename
+   --add-data    : Includes the parser module
+
+4. Find your .exe in the "dist" folder
+
+METHOD 2: Using auto-py-to-exe (GUI alternative)
+------------------------------------------------
+
+1. Install: pip install auto-py-to-exe
+2. Run: auto-py-to-exe
+3. Configure:
+   - Script Location: Browse to app.py
+   - Onefile: One File
+   - Console Window: Window Based (hide console)
+   - Additional Files: Add parser.py
+4. Click "Convert .py to .exe"
+5. Find output in the "output" folder
+
+IMPORTANT SETTINGS
+------------------
+
+Icon (Optional):
+  --icon=your_icon.ico
+  
+  To add a custom icon, place an .ico file in the project folder and add:
+  --icon "icon.ico"
+
+Hidden Imports (if you get import errors):
+  --hidden-import pdfplumber
+  --hidden-import pandas
+  --hidden-import openpyxl
+
+Full recommended command:
+  pyinstaller --onefile --windowed --name "PDF_Invoice_Extractor" --hidden-import pdfplumber --hidden-import pandas --hidden-import openpyxl app.py
+
+TESTING THE EXE
+---------------
+
+1. Copy the .exe to a computer WITHOUT Python installed
+2. Double-click to run
+3. Test with sample PDFs
+4. Verify:
+   - App opens without errors
+   - Can select folder
+   - Processing works
+   - Excel file is created
+   - Status colors display correctly
+
+COMMON ISSUES
+-------------
+
+Issue: "Module not found" error at runtime
+Fix: Add --hidden-import for the missing module
+
+Issue: Antivirus blocks/deletes the .exe
+Fix: This is a false positive. Add exception in antivirus settings.
+     Common with PyInstaller executables.
+
+Issue: .exe is very large (100MB+)
+Fix: This is normal for Python apps bundled with pandas/numpy.
+     Consider using --exclude-module to remove unused packages.
+
+Issue: App crashes silently
+Fix: Remove --windowed temporarily to see console errors:
+     pyinstaller --onefile --name "PDF_Invoice_Extractor" app.py
+
+REDUCING FILE SIZE (Advanced)
+-----------------------------
+
+The .exe will be ~50-100MB due to pandas and dependencies.
+
+To reduce size:
+1. Use UPX compression (download UPX, add to PATH):
+   pyinstaller --onefile --windowed --upx-dir=C:\upx app.py
+
+2. Create a virtual environment with only required packages:
+   python -m venv build_env
+   build_env\Scripts\activate
+   pip install pdfplumber pandas openpyxl pyinstaller
+   pyinstaller [options] app.py
+
+DISTRIBUTION CHECKLIST
+----------------------
+
+Before distributing, verify:
+[ ] .exe runs on Windows 10
+[ ] .exe runs on Windows 11
+[ ] Works on machines without Python
+[ ] Test with various PDF formats
+[ ] README.txt is included
+[ ] No Python/pip required for end users
+
+FINAL PACKAGE CONTENTS
+----------------------
+
+Deliver to customers:
+1. PDF_Invoice_Extractor.exe
+2. README.txt
+
+That's it! Two files only.
+
+================================================================================
+
+
+HOW TO PACKAGE AS SINGLE EXE
+============================
+
+1. Install PyInstaller:
+   pip install pyinstaller
+
+2. Ensure you have the 'assets' folder with 'logo.png' (optional) in the same directory as app.py.
+
+3. Run the following command (Windows):
+
+   pyinstaller --noconfirm --onefile --windowed --name "InvFrog_Organizer" --add-data "assets;assets" app.py
+
+   * Explanation:
+     --onefile: Bundles everything into one .exe
+     --windowed: Hides the black command console
+     --add-data "assets;assets": Copies your logo folder into the temp directory used by the .exe
+     --name: The output filename
+
+4. The resulting .exe will be in the 'dist' folder.
+
+TROUBLESHOOTING:
+- If antivirus flags the .exe: This is common for unsigned PyInstaller apps. It is a false positive.
+- If it crashes on start: Run without '--windowed' to see error messages in the console.

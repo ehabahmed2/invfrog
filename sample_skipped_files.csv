@@ -1,0 +1,5 @@
+Filename,Reason
+invoice_scan_001.pdf,Scanned / Image PDF (no extractable text)
+protected_invoice.pdf,Protected / Encrypted PDF
+corrupted_file.pdf,Corrupted PDF file
+receipt_photo.pdf,Scanned / Image PDF (no extractable text)

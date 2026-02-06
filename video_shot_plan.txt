@@ -1,0 +1,73 @@
+================================================================================
+                    30-SECOND SILENT VIDEO SHOT PLAN
+================================================================================
+
+FOR: Product demo video, GIF, social media preview
+
+TOTAL DURATION: 30 seconds
+AUDIO: None (silent / add background music in post)
+RESOLUTION: 1920x1080 or 1280x720
+
+---
+
+SHOT LIST:
+
+[0:00 - 0:03] OPENING
+- Screen: Desktop with app icon visible
+- Action: Double-click the app icon
+- Text overlay: "PDF Invoice Extractor"
+
+[0:03 - 0:08] SELECT FOLDER
+- Screen: App window opens
+- Action: Click "Browse..." button
+- Action: Navigate to folder with ~10 sample PDFs
+- Action: Click "Select Folder"
+- Text overlay: "1. Select your PDF folder"
+
+[0:08 - 0:12] START EXTRACTION
+- Screen: App shows folder path
+- Action: Click "Start Extraction" button
+- Text overlay: "2. Click Extract"
+
+[0:12 - 0:20] PROCESSING
+- Screen: Progress bar moving, files appearing in list
+- Action: Let it process (fast forward if needed to show multiple files)
+- Visual: Green/yellow/red status colors appearing
+- Text overlay: "3. Automatic processing"
+
+[0:20 - 0:25] RESULTS
+- Screen: Processing complete, summary visible
+- Action: Highlight the summary numbers (Processed: X, Success: Y, etc.)
+- Text overlay: "See results instantly"
+
+[0:25 - 0:30] OUTPUT
+- Screen: Click "Open Output Folder"
+- Action: Show Windows Explorer opening
+- Action: Show the Excel file in the folder
+- Action: Quick peek at Excel opened (optional, time permitting)
+- Text overlay: "Ready-to-use Excel file"
+
+---
+
+RECORDING TIPS:
+
+1. Use clean desktop background (solid color or minimal icons)
+2. Maximize app window but not full-screen (show it's a desktop app)
+3. Use sample PDFs with recognizable names like "Invoice_001.pdf"
+4. Slow down mouse movements for clarity
+5. Pause briefly on each important element
+6. Record at 1x speed, can speed up the processing section in edit
+
+POST-PRODUCTION:
+
+- Add subtle zoom/highlight on key clicks
+- Add text overlays at specified points
+- Add light background music (royalty-free)
+- Add end card with product name/link
+
+---
+
+THUMBNAIL SUGGESTION:
+Screenshot of app with green checkmarks in the list + Excel icon + arrow
+
+================================================================================
