@@ -309,29 +309,37 @@ class InvoiceApp:
 
     def save_reports(self, folder, is_dry):
         ts = datetime.now().strftime("%Y%m%d_%H%M%S")
+        name = "preview_run.csv" if is_dry else f"extraction_results_{ts}.csv"
         
-        # 1. Excel/CSV of Results
         try:
-            csv_name = "preview_run.csv" if is_dry else f"extraction_results_{ts}.csv"
-            with open(os.path.join(folder, csv_name), 'w', newline='', encoding='utf-8-sig') as f:
+            with open(os.path.join(folder, name), 'w', newline='', encoding='utf-8-sig') as f:
                 writer = csv.writer(f)
-                writer.writerow(["Original", "Proposed", "Target Path", "Invoice#", "Date", "Total", "Status", "Reason"])
+                
+                # 1. REMOVED "Proposed Filename" and "Target Path" from this list:
+                writer.writerow(["Original Filename", "Invoice Number", "Date", "Total Amount", "Status", "Reason"])
+                
                 for r in self.results:
-                    writer.writerow([r.filename, r.proposed_filename, r.target_path, 
-                                     r.data.get('invoice_number'), r.data.get('date'), 
-                                     r.data.get('total_amount'), r.status.value, r.reason])
-        except Exception: pass
+                    # 2. REMOVED r.proposed_filename and r.target_path from this list:
+                    writer.writerow([
+                        r.filename, 
+                        r.data.get('invoice_number'), 
+                        r.data.get('date'), 
+                        r.data.get('total_amount'), 
+                        r.status.value, 
+                        r.reason
+                    ])
+        except: pass
         
-        # 2. Error Log
-        skipped = [r for r in self.results if r.status == parser.Status.SKIPPED]
-        if skipped:
+        # ... (Keep the rest of the error logging code exactly as it was) ...
+        if any(r.status == parser.Status.SKIPPED for r in self.results):
             try:
                 with open(os.path.join(folder, "errors.log"), "a", encoding='utf-8') as f:
                     f.write(f"\n--- Run {ts} ---\n")
-                    for r in skipped:
+                    for r in [x for x in self.results if x.status == parser.Status.SKIPPED]:
                         f.write(f"{r.filename}: {r.reason}\n")
-            except Exception: pass
-
+            except: pass
+    
+    
     def process_queue(self):
         try:
             while True:
