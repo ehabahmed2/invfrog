@@ -150,27 +150,49 @@ def generate_proposed_filename(
     vendor = sanitize_filename(data.get('vendor') or "Unknown_Vendor")
     orig_base = os.path.splitext(original_filename)[0]
     
-    # Format Date
-    date_str = data.get('date', '')
-    date_formatted = "00000000"
-    if date_str:
-        # Simple cleanup to remove separators for filename
-        date_formatted = re.sub(r'[^0-9]', '', date_str)[:8]
+     # --- DATE FIX START ---
+    # We want YYYYMMDD (e.g. 20120301) not 132012
+    raw_date = data.get('date', '')
+    date_formatted = ""
     
+    if raw_date:
+        try:
+            # Try to parse the date string into a real date object
+            # We try standard formats found in the Excel/CSV output
+            for fmt in ['%Y-%m-%d', '%m/%d/%Y', '%d/%m/%Y', '%Y/%m/%d']:
+                try:
+                    dt = datetime.strptime(raw_date, fmt)
+                    date_formatted = dt.strftime("%Y%m%d") # Result: 20120301
+                    break
+                except ValueError:
+                    continue
+            
+            # If standard parsing failed, just use the raw numbers but limit length
+            if not date_formatted:
+                nums = re.sub(r'[^0-9]', '', raw_date)
+                if len(nums) >= 6: date_formatted = nums[:8]
+                
+        except:
+            pass
     ext = ".pdf"
+    
+    # Helper to build name parts
+    def build_name(*parts):
+        # Filter out empty parts so we don't get double underscores
+        return "_".join(filter(None, parts)) + ext  
 
     if scheme == NamingScheme.INVOICE_NUMBER:
         if inv and inv != "unknown":
-            return f"INV_{inv}_{date_formatted}{ext}"
+            # Result: INV_47905_20120301.pdf
+            return build_name("INV", inv, date_formatted)
         else:
-            return f"INV_unknown_{sanitize_filename(orig_base)}{ext}"
+            return build_name("INV_unknown", sanitize_filename(orig_base))
             
     elif scheme == NamingScheme.VENDOR_NAME:
-        return f"{vendor}_INV_{inv}_{date_formatted}{ext}"
+        return build_name(vendor, "INV", inv, date_formatted)
         
     elif scheme == NamingScheme.ORIGINAL_FILENAME:
-        # Prepend date if available, else just clean original
-        if date_formatted != "00000000":
+        if date_formatted:
             return f"{date_formatted}_{sanitize_filename(orig_base)}{ext}"
         return f"{sanitize_filename(orig_base)}{ext}"
     
